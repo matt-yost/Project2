@@ -14,6 +14,8 @@ while(studentList.length > 0){
   studentsArray.push(studentList.splice(0,10));
 }
 
+$(".student-list").html(studentsArray[0]);
+
 // Load Pagination HTML to the page
 var pagination = function(){
   // Create pagination HTML
@@ -24,7 +26,7 @@ var pagination = function(){
   paginationHTML += "</ul>";
   $(".pagination").html(paginationHTML);
   $(".pagination li a").first().toggleClass("active");
-  $(".student-list").html(studentsArray[0]);
+
 };
 pagination();
 
