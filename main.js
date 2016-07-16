@@ -8,7 +8,7 @@ var studentCopy = studentList.clone();
 var searchHeader = "<h2>Students</h2><div class='student-search'><input class='search-box' placeholder='Search for students...'><button>Search</button></div>";
 $(".page-header").html(searchHeader);
 
-// Search Function
+// Search function
 $(".search-box").keyup(function(){
   var searchText = $(this).val().toLowerCase();
   studentCopy.each(function(index){
@@ -16,6 +16,7 @@ $(".search-box").keyup(function(){
     var name = $(this).find("h3").text();
     var email = $(this).find(".email").text();
     var studentSearch = (name + " " + email).toLowerCase();
+    // If a student does not match the search append a "not-match" ID to the element
     if(studentSearch.indexOf(searchText) == -1){
       $(this).attr("id", "not-match");
     }
@@ -23,7 +24,7 @@ $(".search-box").keyup(function(){
   pagination(studentCopy);
 });
 
-// Build the page based on search results
+// Build the page
 var pagination = function(list){
 
   // Load list to page
@@ -42,7 +43,7 @@ var pagination = function(list){
         for(var i=-1; i < studentCount; i++){
           $(this).attr("id", i+1);
         }
-        $(this).fadeIn(1000);
+        $(this).fadeIn(750);
         studentCount++;
       }
   });
@@ -52,14 +53,14 @@ var pagination = function(list){
     $(".student-list").append("<li>No students match your search</li>")
   }
 
-  // Show first 10 students
+  // Show first 10 students on page load
   $(list).each(function(index){
     if($(this).attr("id") >= 10){
       $(this).hide();
     }
   });
 
-  // Create pagination HTML
+  // Create pagination HTML based on how many students are shown
   var numberOfPages = Math.ceil(studentCount/10);
   var paginationHTML = "<ul>";
   for(var i = 0; i < numberOfPages; i++){
@@ -67,6 +68,7 @@ var pagination = function(list){
   };
   paginationHTML += "</ul>";
   $(".pagination").html(paginationHTML);
+  // Initally show page 1 as active
   $(".pagination li a").first().toggleClass("active");
 
   // Toggle active class on buttons when clicked
@@ -80,9 +82,10 @@ var pagination = function(list){
     var start = (activePage + 1) * 10 - 10;
     var end = start + 10;
     for(var i=start; i<end; i++){
-      $("#"+i).fadeIn(1000);
+      $("#"+i).fadeIn(750);
     }
   });
 };
 
+// Run the pagination function on page load without any search filters
 pagination(studentList);
