@@ -23,27 +23,39 @@ $(".search-box").keyup(function(){
   pagination(studentCopy);
 });
 
-// Load Pagination HTML to the page
+// Build the page based on search results
 var pagination = function(list){
-
-  // Hide everything
-  list.hide();
-
-  // Only show seatch matches
-  $(list).each(function(index){
-      if($(this).attr("id") !== "not-match"){
-        $(this).show();
-      }
-  });
 
   // Load list to page
   $(".student-list").html(list);
 
-  // Count number of students shown
+  // Hide everything and remove any effects from fadeIn
+  list.hide();
+  list.css("opacity",1);
+
+  // Initiate student count
   var studentCount = 0;
+
+  // Only show search matches and count students to be shown
   $(list).each(function(index){
-    if($(this).attr("style") !== "display: none;"){
-      studentCount++;
+      if($(this).attr("id") !== "not-match"){
+        for(var i=-1; i < studentCount; i++){
+          $(this).attr("id", i+1);
+        }
+        $(this).fadeIn(1000);
+        studentCount++;
+      }
+  });
+
+  // If no students found, show message.
+  if(studentCount === 0){
+    $(".student-list").append("<li>No students match your search</li>")
+  }
+
+  // Show first 10 students
+  $(list).each(function(index){
+    if($(this).attr("id") >= 10){
+      $(this).hide();
     }
   });
 
@@ -60,14 +72,17 @@ var pagination = function(list){
   // Toggle active class on buttons when clicked
   var page = $(".pagination li a");
   $(page).on("click", function(){
+    $(list).hide();
     page.removeClass("active");
     $(this).toggleClass("active");
-    // Show corresponding 10 students when page selected
+    // Fade in corresponding 10 students when page selected
     var activePage = $(page).index(this);
     var start = (activePage + 1) * 10 - 10;
     var end = start + 10;
+    for(var i=start; i<end; i++){
+      $("#"+i).fadeIn(1000);
+    }
   });
 };
-
 
 pagination(studentList);
