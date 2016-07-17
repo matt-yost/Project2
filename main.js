@@ -50,7 +50,7 @@ var pagination = function(list){
 
   // If no students found, show message.
   if(studentCount === 0){
-    $(".student-list").append("<li>No students match your search</li>")
+    $(".student-list").append("<li>No students match your search</li>");
   }
 
   // Show first 10 students on page load
@@ -65,7 +65,7 @@ var pagination = function(list){
   var paginationHTML = "<ul>";
   for(var i = 0; i < numberOfPages; i++){
     paginationHTML+= "<li><a href='#'>" + (i+1) + "</li>";
-  };
+  }
   paginationHTML += "</ul>";
   $(".pagination").html(paginationHTML);
   // Initally show page 1 as active
